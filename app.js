@@ -51,19 +51,21 @@ app.put("/student/:id", (req, res) => {
 }); 
 app.delete("/student/:id", (req, res) => {
 
-   const student = students.find(s => s.id === id);
+    const id = parseInt(req.params.id);
 
-if (!student) {
-    return res.status(404).json({
-        message: "Student not found"
+    const student = students.find(s => s.id === id);
+
+    if (!student) {
+        return res.status(404).json({
+            message: "Student not found"
+        });
+    }
+
+    students = students.filter(s => s.id !== id);
+
+    res.json({
+        message: "Student Deleted Successfully"
     });
-}
-
-students = students.filter(s => s.id !== id);
-
-res.json({
-    message: "Student Deleted Successfully"
-});
 
 });
 app.listen(3000, () => {
